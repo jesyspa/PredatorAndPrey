@@ -3,14 +3,14 @@
 
 #include <SFML/Graphics.hpp>
 
+constexpr  int MAX_HEALTH = 100;
+
 enum class CreatureType
 {
     Predator    = 0,
     Prey        = 1,
     Nothing     = 2
 };
-
-constexpr  int MAX_HEALTH = 100;
 
 class Creature
 {

@@ -1,15 +1,10 @@
 #include "Creature.h"
 
-#include <random>
-#include <cstdlib>
-#include <iostream>
+#include "Random.h"
 
 Creature::Creature()
 {
-    static std::minstd_rand randDevice(std::time(nullptr));
-    std::uniform_int_distribution<int> dist(0, 1000);
-
-    int n = dist(randDevice);
+    auto n = Random::get().intInRange(0, 1000);
 
     if (n > 100)
     {

@@ -1,9 +1,8 @@
 #include "Application.h"
 
-#include <cstdlib>
-#include <ctime>
-#include <random>
 #include <iostream>
+
+#include "Random.h"
 
 namespace
 {
@@ -18,7 +17,7 @@ Application::Application()
 ,   m_pixels    (WIDTH * HEIGHT)
 ,   m_creatures (WIDTH * HEIGHT)
 {
-    //m_window.setFramerateLimit(60);
+    m_window.setFramerateLimit(60);
 
     for (int x = 0; x < WIDTH;  x++)
     {
@@ -95,7 +94,6 @@ void Application::setCellColour(int x, int y, sf::Uint8 colour)
 
 void Application::update()
 {
-    static std::minstd_rand randDevice(std::time(nullptr));
     for (int x = 0; x < WIDTH;  x++)
     {
         for (int y = 0; y < HEIGHT; y++)
@@ -107,10 +105,8 @@ void Application::update()
             if (thisType == CreatureType::Nothing)
                 continue;
 
-
-            std::uniform_int_distribution<int> dist(-1, 1);
-            int xChange = dist(randDevice);
-            int yChange = dist(randDevice);
+            int xChange = Random::get().intInRange(-1, 1);
+            int yChange = Random::get().intInRange(-1, 1);
             int xAdj = x + xChange;
             int yAdj = y + yChange;
 
