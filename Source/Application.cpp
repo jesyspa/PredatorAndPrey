@@ -18,7 +18,7 @@ Application::Application()
 ,   m_pixels    (WIDTH * HEIGHT)
 ,   m_creatures (WIDTH * HEIGHT)
 {
-    m_window.setFramerateLimit(60);
+    //m_window.setFramerateLimit(60);
 
     for (int x = 0; x < WIDTH;  x++)
     {
@@ -51,8 +51,9 @@ Application::Application()
     m_predatorCountText.setCharacterSize(15);
     m_preyCountText.setCharacterSize(15);
     m_frameCountText.setCharacterSize(15);
-    m_preyCountText.move    (0, 20);
-    m_frameCountText.move   (0, 40);
+    m_predatorCountText.move    (8, 0);
+    m_preyCountText.move        (8, 20);
+    m_frameCountText.move       (8, 40);
 
 }
 
