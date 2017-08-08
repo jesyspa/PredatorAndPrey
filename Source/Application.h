@@ -28,9 +28,9 @@ class Application
         std::vector<sf::Vertex> m_pixels;
         std::vector<Creature> m_creatures;
 
-        int m_preyCount = 0;
+        int m_preyCount     = 0;
         int m_predatorCount = 0;
-        int m_frameCount;
+        int m_frameCount    = 0;
 
         sf::Font m_font;
         sf::Text m_preyCountText;

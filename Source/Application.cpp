@@ -50,6 +50,7 @@ Application::Application()
 
     m_predatorCountText.setCharacterSize(15);
     m_preyCountText.setCharacterSize(15);
+    m_frameCountText.setCharacterSize(15);
     m_preyCountText.move    (0, 20);
     m_frameCountText.move   (0, 40);
 
@@ -140,6 +141,7 @@ void Application::update()
 
     m_predatorCountText.setString   ("Predator: " + std::to_string(m_predatorCount));
     m_preyCountText.setString       ("Prey    : " + std::to_string(m_preyCount));
+    m_frameCountText.setString      ("Steps   : " + std::to_string(m_frameCount));
 }
 
 
