@@ -61,7 +61,11 @@ void Application::run()
     while (m_window.isOpen())
     {
         m_window.clear();
+
+        handleInput();
+
         update();
+
         m_window.draw(m_pixels.data(), m_pixels.size(), sf::Points);
 
         m_window.draw(m_predatorCountText);
@@ -205,6 +209,67 @@ void Application::updatePrey(Creature& thisCreature, Creature& otherCreature)
     }
 }
 
+void Application::handleInput()
+{
+    static sf::Clock delayClock;
+    if (delayClock.getElapsedTime().asSeconds() > 0.5)
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+        {
+            delayClock.restart();
+            for (int x = 0; x < WIDTH;  x++)
+            {
+                for (int y = 0; y < HEIGHT; y++)
+                {
+                    auto index = getIndex(x, y);
+                    auto type = m_creatures[index].getType();
 
+                    switch(type)
+                    {
+                        case CreatureType::Nothing:
+                            if (Random::get().intInRange(0, 10) > 7)
+                            {
+                                m_creatures[index].setType(CreatureType::Prey);
+                                m_preyCount++;
+                            }
+                            break;
+
+
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        {
+            delayClock.restart();
+            for (int x = 0; x < WIDTH;  x++)
+            {
+                for (int y = 0; y < HEIGHT; y++)
+                {
+                    auto index = getIndex(x, y);
+                    auto type = m_creatures[index].getType();
+
+                    switch(type)
+                    {
+                        case CreatureType::Nothing:
+                            if (Random::get().intInRange(0, 10) > 7)
+                            {
+                                m_creatures[index].setType(CreatureType::Predator);
+                                m_creatures[index].heal(100);
+                                m_predatorCount++;
+                            }
+                            break;
+
+
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+    }
+}
 
 
