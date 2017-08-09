@@ -6,16 +6,16 @@
 
 #include "Creature.h"
 
-constexpr int WIDTH = 500, HEIGHT = 400;
-
 class Application
 {
     public:
-        Application();
+        Application(int width, int height);
 
         void run();
 
     private:
+        int getIndex(int x, int y);
+
         void pollEvents();
         void setCellColour(int x, int y, sf::Uint8 colour);
         void update();
@@ -23,6 +23,7 @@ class Application
         void updatePredator (Creature& thisCreature, Creature& otherCreature);
         void updatePrey     (Creature& thisCreature, Creature& otherCreature);
 
+        const int WIDTH, HEIGHT;
 
         sf::RenderWindow m_window;
         std::vector<sf::Vertex> m_pixels;
@@ -36,6 +37,8 @@ class Application
         sf::Text m_preyCountText;
         sf::Text m_predatorCountText;
         sf::Text m_frameCountText;
+
+
 
 };
 

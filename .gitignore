@@ -5,3 +5,7 @@
 
 bin/
 obj/
+
+*.7z
+
+PredatorAndPreyCellularAutomaton/

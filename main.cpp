@@ -1,5 +1,7 @@
 #include "Source/Application.h"
 
+#include <iostream>
+
 /**
     PREDATOR AND PREY CELLULAR AUTOMATON
 
@@ -27,7 +29,13 @@
 
 int main()
 {
-    Application app;
+    int w, h;
+    std::cout << "Please enter window width:  ";
+    std::cin >> w;
+    std::cout << "Please enter window height: ";
+    std::cin >> h;
+
+    Application app(w, h);;
     app.run();
     return 0;
 }

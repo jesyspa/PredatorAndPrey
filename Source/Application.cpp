@@ -4,16 +4,11 @@
 
 #include "Random.h"
 
-namespace
-{
-    int getIndex(int x, int y)
-    {
-        return y * WIDTH + x;
-    }
-}
 
-Application::Application()
-:   m_window    ({WIDTH, HEIGHT}, "Predator And Prey")
+Application::Application(int width, int height)
+:   WIDTH (width)
+,   HEIGHT(height)
+,   m_window    ({WIDTH, HEIGHT}, "Predator And Prey")
 ,   m_pixels    (WIDTH * HEIGHT)
 ,   m_creatures (WIDTH * HEIGHT)
 {
@@ -54,6 +49,11 @@ Application::Application()
     m_preyCountText.move        (8, 20);
     m_frameCountText.move       (8, 40);
 
+}
+
+int Application::getIndex(int x, int y)
+{
+    return y * WIDTH + x;
 }
 
 void Application::run()
