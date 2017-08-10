@@ -20,3 +20,6 @@ The simulation works in steps, with the following rules:
         -If the adjacent square is a prey:
             -They will eat it, turning it into a "predator" (reproducing)
             -Their health will increase by the amount of health the eaten prey had
+            
+           
+ ![Image](http://i.imgur.com/ufXdrSz.png)
