@@ -11,8 +11,15 @@ Application::Application(int width, int height)
 ,   m_window    ({WIDTH, HEIGHT}, "Predator And Prey")
 ,   m_pixels    (WIDTH * HEIGHT)
 ,   m_creatures (WIDTH * HEIGHT)
+,   m_view      ({0, 0}, {WIDTH, HEIGHT})
 {
+    m_view.setCenter(WIDTH / 2, HEIGHT / 2);
     m_window.setFramerateLimit(60);
+
+    m_outline.setFillColor({0, 0, 0, 0});
+    m_outline.setOutlineColor(sf::Color::White);
+    m_outline.setOutlineThickness(5);
+    m_outline.setSize({WIDTH, HEIGHT});
 
     for (int x = 0; x < WIDTH;  x++)
     {
@@ -58,16 +65,21 @@ int Application::getIndex(int x, int y)
 
 void Application::run()
 {
+    sf::Clock deltaClock;
     while (m_window.isOpen())
     {
+        auto deltaTime = deltaClock.restart().asSeconds();
         m_window.clear();
 
-        handleInput();
+        handleInput(deltaTime);
 
         update();
 
+        m_window.setView(m_view);
         m_window.draw(m_pixels.data(), m_pixels.size(), sf::Points);
+        m_window.draw(m_outline);
 
+        m_window.setView(m_window.getDefaultView());
         m_window.draw(m_predatorCountText);
         m_window.draw(m_preyCountText);
         m_window.draw(m_frameCountText);
@@ -182,7 +194,7 @@ void Application::updatePrey(Creature& thisCreature, Creature& otherCreature)
     bool reproduce = false;
     if (thisCreature.getHealth() >= MAX_HEALTH)
     {
-        thisCreature.setHealth(1);
+        thisCreature.setHealth(10);
         reproduce = true;
     }
 
@@ -209,67 +221,86 @@ void Application::updatePrey(Creature& thisCreature, Creature& otherCreature)
     }
 }
 
-void Application::handleInput()
+void Application::handleInput(float dt)
 {
     static sf::Clock delayClock;
+    if (m_window.hasFocus())
     if (delayClock.getElapsedTime().asSeconds() > 0.5)
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+    {
+        delayClock.restart();
+        for (int x = 0; x < WIDTH;  x++)
         {
-            delayClock.restart();
-            for (int x = 0; x < WIDTH;  x++)
+            for (int y = 0; y < HEIGHT; y++)
             {
-                for (int y = 0; y < HEIGHT; y++)
+                auto index = getIndex(x, y);
+                auto type = m_creatures[index].getType();
+
+                switch(type)
                 {
-                    auto index = getIndex(x, y);
-                    auto type = m_creatures[index].getType();
-
-                    switch(type)
-                    {
-                        case CreatureType::Nothing:
-                            if (Random::get().intInRange(0, 10) > 7)
-                            {
-                                m_creatures[index].setType(CreatureType::Prey);
-                                m_preyCount++;
-                            }
-                            break;
+                    case CreatureType::Nothing:
+                        if (Random::get().intInRange(0, 10) > 7)
+                        {
+                            m_creatures[index].setType(CreatureType::Prey);
+                            m_preyCount++;
+                        }
+                        break;
 
 
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-        {
-            delayClock.restart();
-            for (int x = 0; x < WIDTH;  x++)
-            {
-                for (int y = 0; y < HEIGHT; y++)
-                {
-                    auto index = getIndex(x, y);
-                    auto type = m_creatures[index].getType();
-
-                    switch(type)
-                    {
-                        case CreatureType::Nothing:
-                            if (Random::get().intInRange(0, 10) > 7)
-                            {
-                                m_creatures[index].setType(CreatureType::Predator);
-                                m_creatures[index].heal(100);
-                                m_predatorCount++;
-                            }
-                            break;
-
-
-                        default:
-                            break;
-                    }
+                    default:
+                        break;
                 }
             }
         }
     }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+    {
+        delayClock.restart();
+        for (int x = 0; x < WIDTH;  x++)
+        {
+            for (int y = 0; y < HEIGHT; y++)
+            {
+                auto index = getIndex(x, y);
+                auto type = m_creatures[index].getType();
+
+                switch(type)
+                {
+                    case CreatureType::Nothing:
+                        if (Random::get().intInRange(0, 10) > 7)
+                        {
+                            m_creatures[index].setType(CreatureType::Predator);
+                            m_creatures[index].heal(100);
+                            m_predatorCount++;
+                        }
+                        break;
+
+
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        m_view.move(0, -100 * dt);
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        m_view.move(0, 100 * dt);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        m_view.move(-100 * dt, 0);
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        m_view.move(100 * dt, 0);
+    }
+    }
+
 }
 
 

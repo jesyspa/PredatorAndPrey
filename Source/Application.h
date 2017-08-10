@@ -16,7 +16,7 @@ class Application
     private:
         int getIndex(int x, int y);
 
-        void handleInput();
+        void handleInput(float dt);
         void pollEvents();
         void setCellColour(int x, int y, sf::Uint8 colour);
         void update();
@@ -38,6 +38,9 @@ class Application
         sf::Text m_preyCountText;
         sf::Text m_predatorCountText;
         sf::Text m_frameCountText;
+
+        sf::View m_view;
+        sf::RectangleShape m_outline;
 
 
 
