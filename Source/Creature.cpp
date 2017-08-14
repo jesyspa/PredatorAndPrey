@@ -20,7 +20,7 @@ Creature::Creature()
     }
 }
 
-sf::Color Creature::getColour() noexcept
+sf::Color Creature::getColour()
 {
     if (m_type == CreatureType::Nothing || m_health == 0)
     {
@@ -45,12 +45,12 @@ sf::Color Creature::getColour() noexcept
     }
 }
 
-CreatureType Creature::getType() const noexcept
+CreatureType Creature::getType() const
 {
     return m_type;
 }
 
-void Creature::setType(CreatureType type) noexcept
+void Creature::setType(CreatureType type)
 {
     m_type = type;
 }
@@ -61,7 +61,7 @@ void Creature::heal(int amount)
     m_health = std::min(m_health, MAX_HEALTH);
 }
 
-int Creature::getHealth() const noexcept
+int Creature::getHealth() const
 {
     return m_health;
 }
@@ -96,7 +96,7 @@ void Creature::move(Creature& other)
     m_type = CreatureType::Nothing;
 }
 
-void Creature::setHealth(int val) noexcept
+void Creature::setHealth(int val)
 {
     m_health = val;
 }

@@ -29,13 +29,11 @@
 
 int main()
 {
-    int w, h;
+    unsigned w, h;
     std::cout << "Please enter window width:  ";
     std::cin >> w;
     std::cout << "Please enter window height: ";
     std::cin >> h;
 
-    Application app(w, h);;
-    app.run();
-    return 0;
+    runApplication(w, h);
 }

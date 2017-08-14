@@ -1,6 +1,4 @@
-#ifndef CREATURE_H_INCLUDED
-#define CREATURE_H_INCLUDED
-
+#pragma once
 #include <SFML/Graphics.hpp>
 
 constexpr  int MAX_HEALTH = 100;
@@ -17,14 +15,14 @@ class Creature
     public:
         Creature();
 
-        sf::Color getColour() noexcept;
+        sf::Color getColour();
 
-        CreatureType getType() const noexcept;
-        void setType(CreatureType type) noexcept;
+        CreatureType getType() const;
+        void setType(CreatureType type);
 
         void heal(int amount);
-        int  getHealth() const noexcept;
-        void setHealth(int val) noexcept;
+        int  getHealth() const;
+        void setHealth(int val);
         void update();
 
         void reproduce(Creature& other);
@@ -36,5 +34,3 @@ class Creature
 
         int m_health = MAX_HEALTH / 5;
 };
-
-#endif // CREATURE_H_INCLUDED

@@ -1,31 +1,35 @@
-#ifndef APPLICATION_H_INCLUDED
-#define APPLICATION_H_INCLUDED
+#pragma once
+#include "Creature.h"
 
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-#include "Creature.h"
-
 class Application
 {
-    public:
-        Application(float width, float height);
+        Application(unsigned width, unsigned height);
 
-        void run();
-
-    private:
-        int getIndex(int x, int y);
+        unsigned getIndex(unsigned x, unsigned y) const;
+        bool isRunning() const;
 
         void handleInput(float dt);
-        void pollEvents();
-        void setCellColour(int x, int y, sf::Uint8 colour);
+        void clear();
         void update();
+        void draw();
+        void pollEvents();
+
+        void setCellColour(unsigned x, unsigned y, sf::Uint8 colour);
 
         void updatePredator (Creature& thisCreature, Creature& otherCreature);
         void updatePrey     (Creature& thisCreature, Creature& otherCreature);
 
-        const float WIDTH,
-                    HEIGHT;
+        void handleContinuousInput(float dt);
+        void handleDiscreteInput();
+
+        template<typename F>
+        void forEachCell(F f);
+
+        const unsigned WIDTH,
+                       HEIGHT;
 
         sf::RenderWindow m_window;
         std::vector<sf::Vertex> m_pixels;
@@ -43,8 +47,16 @@ class Application
         sf::View m_view;
         sf::RectangleShape m_outline;
 
+        sf::Clock inputDelayClock;
 
-
+        friend void runApplication(unsigned width, unsigned height);
 };
 
-#endif // APPLICATION_H_INCLUDED
+template<typename F>
+void Application::forEachCell(F f) {
+    for (unsigned x = 0; x < WIDTH; ++x)
+        for (unsigned y = 0; y < HEIGHT; ++y)
+            f(x, y);
+}
+
+void runApplication(unsigned width, unsigned height);

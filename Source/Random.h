@@ -1,6 +1,4 @@
-#ifndef RANDOM_H_INCLUDED
-#define RANDOM_H_INCLUDED
-
+#pragma once
 #include <random>
 
 class Random
@@ -8,6 +6,7 @@ class Random
     public:
         static Random& get();
         int intInRange(int low, int high);
+        bool boolWithChance(double chance);
 
         Random(const Random& other) = delete;
         Random(Random&& other) = delete;
@@ -20,5 +19,3 @@ class Random
         std::mt19937 m_randEngine;
 
 };
-
-#endif // RANDOM_H_INCLUDED
