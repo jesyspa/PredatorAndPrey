@@ -9,7 +9,7 @@
 class Application
 {
     public:
-        Application(int width, int height);
+        Application(float width, float height);
 
         void run();
 
@@ -24,7 +24,8 @@ class Application
         void updatePredator (Creature& thisCreature, Creature& otherCreature);
         void updatePrey     (Creature& thisCreature, Creature& otherCreature);
 
-        const int WIDTH, HEIGHT;
+        const float WIDTH,
+                    HEIGHT;
 
         sf::RenderWindow m_window;
         std::vector<sf::Vertex> m_pixels;

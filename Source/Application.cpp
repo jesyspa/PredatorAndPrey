@@ -5,10 +5,10 @@
 #include "Random.h"
 
 
-Application::Application(int width, int height)
+Application::Application(float width, float height)
 :   WIDTH (width)
 ,   HEIGHT(height)
-,   m_window    ({WIDTH, HEIGHT}, "Predator And Prey")
+,   m_window    ({(unsigned)WIDTH, (unsigned)HEIGHT}, "Predator And Prey")
 ,   m_pixels    (WIDTH * HEIGHT)
 ,   m_creatures (WIDTH * HEIGHT)
 ,   m_view      ({0, 0}, {WIDTH, HEIGHT})
@@ -26,7 +26,7 @@ Application::Application(int width, int height)
         for (int y = 0; y < HEIGHT; y++)
         {
             auto index = getIndex(x, y);
-            m_pixels[index].position    = {x, y};
+            m_pixels[index].position    = {(float)x, (float)y};
             m_pixels[index].color       = m_creatures[index].getColour();
             auto type = m_creatures[index].getType();
             switch(type)
@@ -295,9 +295,17 @@ void Application::handleInput(float dt)
     {
         m_view.move(-100 * dt, 0);
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         m_view.move(100 * dt, 0);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    {
+        m_view.zoom(1.1);
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    {
+        m_view.zoom(0.9);
     }
     }
 
