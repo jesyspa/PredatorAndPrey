@@ -1,36 +1,29 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-constexpr  int MAX_HEALTH = 100;
-
 enum class CreatureType
 {
-    Predator    = 0,
+    Nothing     = 0,
     Prey        = 1,
-    Nothing     = 2
+    Predator    = 2,
 };
 
-class Creature
+struct Creature
 {
-    public:
-        Creature();
+    Creature();
+    explicit Creature(CreatureType type);
 
-        sf::Color getColour();
+    sf::Color getColour();
+    void update();
+    void heal(int amount);
 
-        CreatureType getType() const;
-        void setType(CreatureType type);
+    void reproduce(Creature& other);
+    void move(Creature& other);
 
-        void heal(int amount);
-        int  getHealth() const;
-        void setHealth(int val);
-        void update();
+    CreatureType type;
+    static const int MAX_HEALTH = 100;
+    static const int INITIAL_HEALTH = MAX_HEALTH / 5;
+    int health = INITIAL_HEALTH;
 
-        void reproduce(Creature& other);
-
-        void move(Creature& other);
-
-    private:
-        CreatureType m_type;
-
-        int m_health = MAX_HEALTH / 5;
+    static Creature const nothing;
 };

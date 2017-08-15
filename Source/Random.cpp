@@ -23,3 +23,9 @@ bool Random::boolWithChance(double chance)
     std::bernoulli_distribution dist(chance);
     return dist(m_randEngine);
 }
+
+int Random::intWithChance(std::initializer_list<double> weights)
+{
+    std::discrete_distribution<int> dist(weights);
+    return dist(m_randEngine);
+}
